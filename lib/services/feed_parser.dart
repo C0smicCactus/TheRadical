@@ -5,6 +5,7 @@ import 'package:html/parser.dart' show parseFragment;
 import '../models/article.dart';
 import '../core/app_config.dart';
 import '../core/network_config.dart';
+import '../core/feed_filter_rules.dart';
 
 class FeedParser {
   static List<Article> parse(String rawXml, String sourceName) {
@@ -107,7 +108,8 @@ class FeedParser {
         }
       }
 
-      results.add(Article(
+      // Apply feed-specific filtering rules
+      final article = Article(
         title: title,
         link: link.trim(),
         source: sourceName,
@@ -116,7 +118,11 @@ class FeedParser {
         thumbnail: wrapProxy(scrapeImage(content + bestDesc)),
         parsedDate: parseDate(pubDateStr),
         author: author.isEmpty ? null : author,
-      ));
+      );
+
+      if (!FeedFilterRules.shouldExcludeArticle(article)) {
+        results.add(article);
+      }
     }
     return results;
   }
