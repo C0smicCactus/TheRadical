@@ -12,11 +12,13 @@ class DashboardDrawer extends StatelessWidget {
   final String activeFilter;
   final Function(String) onFilterChanged;
   final VoidCallback onShowSources, onShowAbout;
+  final VoidCallback onResetFeed;
 
   const DashboardDrawer({
     super.key, required this.primaryColor, required this.onThemeChanged, required this.extendedMode,
     required this.onExtendedModeChanged, required this.hideTheory, required this.onHideTheoryChanged,
     required this.activeFilter, required this.onFilterChanged, required this.onShowSources, required this.onShowAbout,
+    required this.onResetFeed,
   });
 
   @override
@@ -73,9 +75,48 @@ class DashboardDrawer extends StatelessWidget {
         _btn("SIGNAL SOURCES", FontAwesomeIcons.satelliteDish, onShowSources),
         const SizedBox(height: 12),
         _btn("ABOUT PROJECT", FontAwesomeIcons.circleInfo, onShowAbout),
+        const SizedBox(height: 30),
+        _resetBtn(context),
       ]),
     );
   }
+
+  Widget _resetBtn(BuildContext ctx) => InkWell(
+    onTap: () {
+      showDialog(
+        context: ctx,
+        builder: (ctx) => AlertDialog(
+          backgroundColor: AppColors.appSurface,
+          title: const Text("Reset Feed?", style: TextStyle(fontWeight: FontWeight.bold)),
+          content: const Text("This will wipe all cached articles and viewed story tracking.\nYour settings (theme, filters, coverage) will be preserved.\n\nA fresh feed update will load immediately.", style: TextStyle(fontSize: 12)),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(ctx), child: const Text("Cancel", style: TextStyle(color: AppColors.textSubtle))),
+            TextButton(onPressed: () { Navigator.pop(ctx); Navigator.pop(ctx); onResetFeed(); }, child: const Text("RESET", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold))),
+          ],
+        ),
+      );
+    },
+    child: Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.red.withValues(alpha: 0.4)),
+        color: AppColors.highlightOverlay,
+      ),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              FaIcon(FontAwesomeIcons.rotate, size: 14, color: Colors.red),
+              SizedBox(width: 12),
+              Text("RESET FEED", style: TextStyle(fontSize: 10, fontWeight: FontWeight.w900, letterSpacing: 2, color: Colors.red)),
+            ],
+          ),
+          FaIcon(FontAwesomeIcons.arrowRight, size: 10, color: Colors.red),
+        ],
+      ),
+    ),
+  );
 
   Widget _btn(String t, FaIconData i, VoidCallback o) => InkWell(onTap: o, child: Container(padding: const EdgeInsets.all(16), decoration: BoxDecoration(border: Border.all(color: primaryColor.withValues(alpha: 0.3)), color: AppColors.highlightOverlay), child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Row(children: [FaIcon(i, size: 14, color: primaryColor), const SizedBox(width: 12), Text(t, style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w900, letterSpacing: 2))]), FaIcon(FontAwesomeIcons.arrowRight, size: 10, color: primaryColor)])));
 }

@@ -262,6 +262,30 @@ class _NewsDashboardState extends State<NewsDashboard> {
     _scaffoldKey.currentState?.openEndDrawer();
   }
 
+  /// Reset feed cache while preserving user settings.
+  Future<void> _resetFeed() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      // Clear cached articles
+      await prefs.remove(NetworkConfig.offlineCacheKey);
+      // Clear viewed stories tracking
+      await prefs.remove(NetworkConfig.viewedStoriesKey);
+      // Reset internal state
+      setState(() {
+        _allArticles.clear();
+        _displayList.clear();
+        _viewedStoryMap.clear();
+        _visibleCount = NetworkConfig.articlesPerPage;
+        _isLoading = true;
+        _showLoadMoreButton = false;
+      });
+      // Trigger fresh feed fetch
+      await _fetchNews();
+    } catch (e) {
+      debugPrint("Reset Feed Error: $e");
+    }
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
@@ -277,6 +301,7 @@ class _NewsDashboardState extends State<NewsDashboard> {
         primaryColor: widget.primaryColor, 
         onThemeChanged: widget.onThemeChanged,
         extendedMode: _extendedMode, 
+        onResetFeed: _resetFeed,
         onExtendedModeChanged: (v) async { 
           final p = await SharedPreferences.getInstance(); 
           p.setBool('extended_coverage', v); 
