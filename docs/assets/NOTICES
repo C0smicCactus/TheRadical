@@ -5348,7 +5348,6 @@ SOFTWARE.
 
 --------------------------------------------------------------------------------
 flutter_lints
-palette_generator
 path_provider_windows
 plugin_platform_interface
 shared_preferences_linux
@@ -21290,6 +21289,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 --------------------------------------------------------------------------------
 jni_flutter
+jni_util
 
 Copyright 2026, the Dart project authors.
 

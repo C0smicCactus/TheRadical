@@ -21,7 +21,7 @@ dependencies:
   http: ^1.1.0
 
   # Typography to match Space Grotesk and Manrope
-  google_fonts: ^6.1.0
+  google_fonts: ^8.2.1
 
   # Opening news articles in a new browser tab
   url_launcher: ^6.2.0
@@ -30,14 +30,11 @@ dependencies:
   font_awesome_flutter: ^11.0.0
 
   # Date and time formatting
-  intl: ^0.19.0
+  intl: ^0.20.3
 
   # HTML parsing and Web support
   web: ^1.1.1
   html: ^0.15.6
-
-  # Image Processing and Color Extraction
-  palette_generator: ^0.3.3+7
 
   # Persistent Image Caching and Storage Management (14-day logic)
   cached_network_image: ^3.3.1
@@ -48,7 +45,7 @@ dev_dependencies:
     sdk: flutter
 
   # The "lints" package contains a set of recommended lints for Flutter.
-  flutter_lints: ^3.0.0
+  flutter_lints: ^6.0.0
 
 flutter:
   # The system font will be overridden by Google Fonts in main.dart

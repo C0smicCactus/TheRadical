@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:palette_generator/palette_generator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../models/article.dart';
 import '../core/app_colors.dart';
@@ -45,10 +44,10 @@ class _ArticleTileState extends State<ArticleTile> {
     if (targetImage.isEmpty) return;
     
     try {
-      final pg = await PaletteGenerator.fromImageProvider(
-        CachedNetworkImageProvider(targetImage, cacheManager: AppCacheManager.instance)
+      final scheme = await ColorScheme.fromImageProvider(
+        provider: CachedNetworkImageProvider(targetImage, cacheManager: AppCacheManager.instance),
       );
-      if (mounted) setState(() => _extractedColor = pg.vibrantColor?.color ?? pg.dominantColor?.color);
+      if (mounted) setState(() => _extractedColor = scheme.primary);
     } catch (_) {}
   }
 
