@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../core/app_colors.dart';
 import '../core/app_config.dart';
@@ -344,6 +345,12 @@ class _NewsDashboardState extends State<NewsDashboard> {
         onShowAbout: () { 
           _scaffoldKey.currentState?.openEndDrawer();
           DashboardDialogs.showAboutDialog(context, widget.primaryColor); 
+        },
+        onShowGitHub: () async { 
+          final url = Uri.parse('https://github.com/C0smicCactus/TheRadical');
+          if (await canLaunchUrl(url)) {
+            await launchUrl(url, mode: LaunchMode.externalApplication);
+          }
         },
       ),
       bottomNavigationBar: BottomNavigationBar(

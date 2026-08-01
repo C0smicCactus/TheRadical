@@ -11,13 +11,13 @@ class DashboardDrawer extends StatelessWidget {
   final Function(bool) onExtendedModeChanged, onHideTheoryChanged;
   final String activeFilter;
   final Function(String) onFilterChanged;
-  final VoidCallback onShowSources, onShowAbout;
+  final VoidCallback onShowSources, onShowAbout, onShowGitHub;
   final VoidCallback onResetFeed;
 
   const DashboardDrawer({
     super.key, required this.primaryColor, required this.onThemeChanged, required this.extendedMode,
     required this.onExtendedModeChanged, required this.hideTheory, required this.onHideTheoryChanged,
-    required this.activeFilter, required this.onFilterChanged, required this.onShowSources, required this.onShowAbout,
+    required this.activeFilter, required this.onFilterChanged, required this.onShowSources, required this.onShowAbout, required this.onShowGitHub,
     required this.onResetFeed,
   });
 
@@ -75,6 +75,8 @@ class DashboardDrawer extends StatelessWidget {
         _btn("SIGNAL SOURCES", FontAwesomeIcons.satelliteDish, onShowSources),
         const SizedBox(height: 12),
         _btn("ABOUT PROJECT", FontAwesomeIcons.circleInfo, onShowAbout),
+        const SizedBox(height: 12),
+        _btn("GITHUB", FontAwesomeIcons.github, onShowGitHub),
         const SizedBox(height: 30),
         _resetBtn(context),
       ]),

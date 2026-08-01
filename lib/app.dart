@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'core/app_colors.dart';
@@ -56,9 +57,11 @@ class _TheRadicalAppState extends State<TheRadicalApp> {
             colorScheme: ColorScheme.dark(primary: primaryColor),
             textTheme: GoogleFonts.manropeTextTheme(ThemeData.dark().textTheme),
           ),
-          home: NewsDashboard(
-            primaryColor: primaryColor,
-            onThemeChanged: updateTheme,
+          home: SelectionArea(
+            child: NewsDashboard(
+              primaryColor: primaryColor,
+              onThemeChanged: updateTheme,
+            ),
           ),
         );
       },
